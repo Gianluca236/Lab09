@@ -68,6 +68,14 @@ class Controller:
             self._view.lista_visualizzazione.controls.clear()
             self._view.lista_visualizzazione.controls.append(
                 ft.Text(f"Il pacchetto ottimo costa {costo}€ e ha valore culturale pari a {val_culturale}:"))
+
             for tour in pacchetto:
-                self._view.lista_visualizzazione.controls.append(ft.Text(f" •    {tour} → {tour.attrazioni}"))
+                att_ids = self._model.att_per_tour.get(tour.id, set())
+                nomi_attrazioni = [self._model.attrazioni_map[a].nome for a in att_ids]
+
+                self._view.lista_visualizzazione.controls.append(
+                    ft.Text(f" • {tour} --> {', '.join(nomi_attrazioni)}"))
+
             self._view.update()
+
+
